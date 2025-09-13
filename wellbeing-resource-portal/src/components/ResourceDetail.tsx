@@ -33,15 +33,17 @@ export const ResourceDetail: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100">
+      <div className="container mx-auto px-6 py-12 max-w-6xl">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-12 animate-fade-in">
           <button
             onClick={() => navigate('/')}
-            className="flex items-center text-blue-600 hover:text-blue-700 mb-4 transition-colors"
+            className="flex items-center text-blue-600 hover:text-blue-700 mb-6 transition-all duration-300 hover:translate-x-1 group"
           >
-            <span className="mr-2">←</span>
+            <svg className="w-5 h-5 mr-2 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
             Back to Resources
           </button>
           

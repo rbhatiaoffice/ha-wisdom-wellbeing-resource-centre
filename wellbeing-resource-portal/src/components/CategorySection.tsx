@@ -16,22 +16,19 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
   if (resources.length === 0) return null;
 
   return (
-    <section className="mb-16">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-4">
-          {category}
-          <span className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">
-            {resources.length} {resources.length === 1 ? 'resource' : 'resources'}
-          </span>
-        </h2>
+    <section className="mb-12">
+      <div className="flex items-center gap-4 mb-6">
+        <div className="w-1 h-8 bg-red-500"></div>
+        <h2 className="text-3xl font-bold text-black" style={{fontFamily: 'serif'}}>{category}</h2>
+        <span className="text-sm text-gray-500">{resources.length} items</span>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {resources.map((resource) => (
-          <ResourceCard
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+        {resources.map((resource, index) => (
+          <ResourceCard 
             key={resource.id}
-            resource={resource}
-            onClick={onResourceClick}
+            resource={resource} 
+            onClick={onResourceClick} 
           />
         ))}
       </div>

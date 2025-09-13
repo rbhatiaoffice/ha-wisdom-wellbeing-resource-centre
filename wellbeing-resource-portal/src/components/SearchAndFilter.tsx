@@ -58,82 +58,67 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-      <div className="flex flex-col lg:flex-row gap-4">
-        {/* Search Input */}
-        <div className="flex-1">
-          <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-2">
-            Search Resources
-          </label>
-          <input
-            id="search"
-            type="text"
-            placeholder="Search by title or tags..."
-            value={filters.searchTerm}
-            onChange={handleSearchChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
+    <div className="mb-8">
+      <div className="search-filter-container">
+        <div className="flex flex-col items-center gap-4">
+          {/* Search and Category Row */}
+          <div className="flex flex-col sm:flex-row gap-4 items-center w-full max-w-2xl">
+            {/* Search Input */}
+            <div className="flex-1">
+              <input
+                id="search"
+                type="text"
+                placeholder="Search resources title or"
+                value={filters.searchTerm}
+                onChange={handleSearchChange}
+                className="search-input"
+              />
+            </div>
 
-        {/* Category Filter */}
-        <div className="lg:w-48">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
-            Category
-          </label>
-          <select
-            id="category"
-            value={filters.category}
-            onChange={handleCategoryChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
+            {/* Category Filter */}
+            <div className="w-32">
+              <select
+                id="category"
+                value={filters.category}
+                onChange={handleCategoryChange}
+                className="filter-select w-full"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-        {/* Sort By */}
-        <div className="lg:w-32">
-          <label htmlFor="sortBy" className="block text-sm font-medium text-gray-700 mb-2">
-            Sort By
-          </label>
-          <select
-            id="sortBy"
-            value={filters.sortBy}
-            onChange={handleSortByChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="category">Category</option>
-            <option value="date">Date</option>
-          </select>
-        </div>
+          {/* Sort Row */}
+          <div className="flex flex-col sm:flex-row gap-4 items-center">
+            {/* Sort By */}
+            <div className="flex items-center gap-2">
+              <span className="filter-label">Sort:</span>
+              <select
+                id="sortBy"
+                value={filters.sortBy}
+                onChange={handleSortByChange}
+                className="filter-select"
+              >
+                <option value="category">Category</option>
+                <option value="date">Date</option>
+              </select>
+            </div>
 
-        {/* Sort Order */}
-        <div className="lg:w-32">
-          <label htmlFor="sortOrder" className="block text-sm font-medium text-gray-700 mb-2">
-            Order
-          </label>
-          <select
-            id="sortOrder"
-            value={filters.sortOrder}
-            onChange={handleSortOrderChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
-        </div>
-
-        {/* Clear Filters */}
-        <div className="lg:w-32 flex items-end">
-          <button
-            onClick={clearFilters}
-            className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-          >
-            Clear
-          </button>
+            {/* Sort Order */}
+            <select
+              id="sortOrder"
+              value={filters.sortOrder}
+              onChange={handleSortOrderChange}
+              className="filter-select"
+            >
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>

@@ -29,42 +29,17 @@ export const Home: React.FC = () => {
   const groupedResources = groupResourcesByCategory(filteredAndSortedResources);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-white">
+      <div className="container mx-auto px-6 py-8 max-w-7xl">
         {/* Header */}
-        <header className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Wellbeing Resource Portal
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Discover wellness resources to support your physical and mental wellbeing. 
-            Explore podcasts, articles, recipes, and more.
-          </p>
+        <header className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-4xl font-bold text-black" style={{fontFamily: 'serif'}}>Resource Centre</h1>
+            <p className="text-sm text-black" style={{fontFamily: 'serif'}}>Supporting your wellbeing journey</p>
+          </div>
+          <p className="text-center text-gray-600 mb-8">physical and mental wellbeing.</p>
         </header>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg p-4 text-center shadow-sm border border-gray-200">
-            <div className="text-xl font-bold text-blue-600">{mockResources.length}</div>
-            <div className="text-sm text-gray-600">Resources</div>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center shadow-sm border border-gray-200">
-            <div className="text-xl font-bold text-green-600">{groupedResources.length}</div>
-            <div className="text-sm text-gray-600">Categories</div>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center shadow-sm border border-gray-200">
-            <div className="text-xl font-bold text-purple-600">
-              {mockResources.reduce((acc, r) => acc + r.duration, 0)}
-            </div>
-            <div className="text-sm text-gray-600">Minutes</div>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center shadow-sm border border-gray-200">
-            <div className="text-xl font-bold text-orange-600">
-              {new Set(mockResources.flatMap(r => r.tags)).size}
-            </div>
-            <div className="text-sm text-gray-600">Tags</div>
-          </div>
-        </div>
 
         {/* Search and Filter */}
         <SearchAndFilter 
@@ -84,8 +59,8 @@ export const Home: React.FC = () => {
               />
             ))
           ) : (
-            <div className="text-center py-12">
-              <div className="text-gray-500 text-lg mb-4">No resources found</div>
+            <div className="text-center py-20">
+              <div className="text-gray-500 text-xl mb-4">No resources found</div>
               <p className="text-gray-400">Try adjusting your search or filter criteria</p>
             </div>
           )}
