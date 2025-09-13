@@ -32,3 +32,21 @@ export interface ResourceGroup {
   category: ResourceCategory;
   resources: Resource[];
 }
+
+// Component props interfaces
+export interface ResourceCardProps {
+  resource: Resource;
+  onClick: (resource: Resource) => void;
+}
+
+export interface ResourceModalProps {
+  resource: Resource | null;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface CategorySectionProps {
+  category: string;
+  resources: Resource[];
+  onResourceClick: (resource: Resource) => void;
+}
