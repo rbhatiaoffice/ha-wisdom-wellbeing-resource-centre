@@ -21,8 +21,8 @@ export const Home: React.FC = () => {
   };
 
   const filteredAndSortedResources = useMemo(() => {
-    let filtered = filterResources(mockResources, filters);
-    let sorted = sortResources(filtered, filters.sortBy, filters.sortOrder);
+    const filtered = filterResources(mockResources, filters);
+    const sorted = sortResources(filtered, filters.sortBy, filters.sortOrder);
     return sorted;
   }, [filters]);
 

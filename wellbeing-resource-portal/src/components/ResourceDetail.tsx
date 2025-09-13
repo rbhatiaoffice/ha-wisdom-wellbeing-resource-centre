@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import type { Resource } from '../types/resource';
 import { mockResources } from '../data/mockData';
 
 export const ResourceDetail: React.FC = () => {
