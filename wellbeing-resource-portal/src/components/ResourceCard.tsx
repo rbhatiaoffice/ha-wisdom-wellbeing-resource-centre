@@ -1,5 +1,10 @@
 import React from 'react';
-import { ResourceCardProps } from '../types/resource';
+import { Resource } from '../types/resource';
+
+interface ResourceCardProps {
+  resource: Resource;
+  onClick: (resource: Resource) => void;
+}
 
 export const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onClick }) => {
   const handleClick = () => {

@@ -1,6 +1,12 @@
 import React from 'react';
-import { CategorySectionProps } from '../types/resource';
+import { Resource } from '../types/resource';
 import { ResourceCard } from './ResourceCard';
+
+interface CategorySectionProps {
+  category: string;
+  resources: Resource[];
+  onResourceClick: (resource: Resource) => void;
+}
 
 export const CategorySection: React.FC<CategorySectionProps> = ({ 
   category, 
