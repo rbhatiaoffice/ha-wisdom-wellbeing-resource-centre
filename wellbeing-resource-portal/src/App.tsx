@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CategorySection } from './components';
 import { mockResources } from './data/mockData';
 import { groupResourcesByCategory } from './utils/resourceUtils';
-import { Resource } from './types/resource';
+import type { Resource } from './types/resource';
 
 function App() {
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
