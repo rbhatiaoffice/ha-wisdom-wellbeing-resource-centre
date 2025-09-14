@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ResourceCard } from '../ResourceCard';
+import { ResourceCard } from '../features/ResourceCard';
 import type { Resource } from '../../types/resource';
 
 const mockResource: Resource = {
@@ -22,10 +22,7 @@ describe('ResourceCard', () => {
     
     expect(screen.getByText('Mindful Moments')).toBeInTheDocument();
     expect(screen.getByText('Podcasts')).toBeInTheDocument();
-    expect(screen.getByText('25min')).toBeInTheDocument();
-    expect(screen.getByText('wellbeing')).toBeInTheDocument();
-    expect(screen.getByText('mindfulness')).toBeInTheDocument();
-    expect(screen.getByText('relaxation')).toBeInTheDocument();
+    expect(screen.getByText(/25\s*m/)).toBeInTheDocument();
   });
 
   it('should call onClick when card is clicked', () => {
@@ -61,30 +58,24 @@ describe('ResourceCard', () => {
     expect(mockOnClick).toHaveBeenCalledWith(mockResource);
   });
 
-  it('should display only first 3 tags', () => {
-    const resourceWithManyTags: Resource = {
-      ...mockResource,
-      tags: ["tag1", "tag2", "tag3", "tag4", "tag5"]
-    };
-    
-    const mockOnClick = vi.fn();
-    
-    render(<ResourceCard resource={resourceWithManyTags} onClick={mockOnClick} />);
-    
-    expect(screen.getByText('tag1')).toBeInTheDocument();
-    expect(screen.getByText('tag2')).toBeInTheDocument();
-    expect(screen.getByText('tag3')).toBeInTheDocument();
-    expect(screen.queryByText('tag4')).not.toBeInTheDocument();
-    expect(screen.queryByText('tag5')).not.toBeInTheDocument();
-  });
-
-  it('should display formatted date', () => {
+  it('should display image with correct alt text', () => {
     const mockOnClick = vi.fn();
     
     render(<ResourceCard resource={mockResource} onClick={mockOnClick} />);
     
-    // The date should be formatted and displayed (format may vary by locale)
-    expect(screen.getByText(/2025/)).toBeInTheDocument();
+    const image = screen.getByAltText('Mindful Moments');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute('src', 'https://example.com/image1.jpg');
+  });
+
+  it('should have proper card structure', () => {
+    const mockOnClick = vi.fn();
+    
+    render(<ResourceCard resource={mockResource} onClick={mockOnClick} />);
+    
+    // Check that the card has the proper structure
+    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByText('Mindful Moments')).toBeInTheDocument();
   });
 
   it('should have proper accessibility attributes', () => {

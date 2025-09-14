@@ -1,24 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { mockResources } from '../data/mockData';
+import { Container } from './layout';
+import { Button } from './ui';
+import { ResourceService } from '../services';
+import type { Resource } from '../types/resource';
 
 export const ResourceDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
-  const resource = mockResources.find(r => r.id === id);
+  const [resource, setResource] = useState<Resource | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadResource = async () => {
+      if (!id) return;
+      
+      try {
+        const data = await ResourceService.getResourceById(id);
+        setResource(data);
+      } catch (error) {
+        console.error('Failed to load resource:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadResource();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading resource...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!resource) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Resource Not Found</h1>
-          <button
-            onClick={() => navigate('/')}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-          >
+          <Button onClick={() => navigate('/')}>
             Back to Home
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -33,8 +61,8 @@ export const ResourceDetail: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100">
-      <div className="container mx-auto px-6 py-12 max-w-6xl">
+    <div className="min-h-screen bg-white">
+      <Container maxWidth="6xl">
         {/* Header */}
         <div className="mb-12 animate-fade-in">
           <button
@@ -110,7 +138,7 @@ export const ResourceDetail: React.FC = () => {
             <p className="text-gray-700 leading-relaxed text-lg">{resource.description}</p>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };

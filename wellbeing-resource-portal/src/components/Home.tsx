@@ -1,50 +1,70 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CategorySection } from './CategorySection';
-import { SearchAndFilter } from './SearchAndFilter';
-import { mockResources } from '../data/mockData';
-import { groupResourcesByCategory, filterResources, sortResources } from '../utils/resourceUtils';
-import type { Resource, ResourceFilters } from '../types/resource';
+import { Header, Container } from './layout';
+import { CategorySection, SearchAndFilter } from './features';
+import { ResourceService } from '../services';
+import { groupResourcesByCategory } from '../utils/resourceUtils';
+import { APP_CONFIG } from '../constants/app';
+import type { Resource } from '../types/resource';
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
   
-  const [filters, setFilters] = useState<ResourceFilters>({
-    searchTerm: '',
-    category: 'All',
-    sortBy: 'category',
-    sortOrder: 'asc'
-  });
-  
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [filteredResources, setFilteredResources] = useState<Resource[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadResources = async () => {
+      try {
+        const data = await ResourceService.getAllResources();
+        setResources(data);
+        setFilteredResources(data);
+      } catch (error) {
+        console.error('Failed to load resources:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadResources();
+  }, []);
+
   const handleResourceClick = (resource: Resource) => {
     navigate(`/resource/${resource.id}`);
   };
 
-  const filteredAndSortedResources = useMemo(() => {
-    const filtered = filterResources(mockResources, filters);
-    const sorted = sortResources(filtered, filters.sortBy, filters.sortOrder);
-    return sorted;
-  }, [filters]);
+  const handleFiltersChange = (filtered: Resource[]) => {
+    setFilteredResources(filtered);
+  };
 
-  const groupedResources = groupResourcesByCategory(filteredAndSortedResources);
+  const groupedResources = groupResourcesByCategory(filteredResources);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading resources...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-6 py-8 max-w-7xl">
+      <Container>
         {/* Header */}
-        <header className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-4xl font-bold text-black" style={{fontFamily: 'serif'}}>Resource Centre</h1>
-            <p className="text-sm text-black" style={{fontFamily: 'serif'}}>Supporting your wellbeing journey</p>
-          </div>
-          <p className="text-center text-gray-600 mb-8">physical and mental wellbeing.</p>
-        </header>
-
+        <Header
+          title={APP_CONFIG.title}
+          tagline={APP_CONFIG.tagline}
+        />
+        <p className="text-center text-gray-600 mb-8">{APP_CONFIG.description}</p>
 
         {/* Search and Filter */}
         <SearchAndFilter 
-          filters={filters} 
-          onFiltersChange={setFilters} 
+          resources={resources}
+          onFiltersChange={handleFiltersChange}
         />
 
         {/* Resources by Category */}
@@ -65,7 +85,7 @@ export const Home: React.FC = () => {
             </div>
           )}
         </main>
-      </div>
+      </Container>
     </div>
   );
 };
