@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { SearchAndFilter } from '../features/SearchAndFilter';
 import { mockResources } from '../../data/mockData';
-import type { Resource } from '../../types/resource';
 
 describe('SearchAndFilter', () => {
   it('should render all filter controls', () => {

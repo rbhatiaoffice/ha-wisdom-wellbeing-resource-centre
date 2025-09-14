@@ -48,14 +48,6 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     });
   };
 
-  const clearFilters = () => {
-    onFiltersChange({
-      searchTerm: '',
-      category: 'All',
-      sortBy: 'category',
-      sortOrder: 'asc'
-    });
-  };
 
   return (
     <div className="mb-8">

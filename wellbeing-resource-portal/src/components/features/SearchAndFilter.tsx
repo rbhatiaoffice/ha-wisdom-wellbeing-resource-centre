@@ -26,7 +26,7 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    updateFilters({ category: e.target.value as any });
+    updateFilters({ category: e.target.value as 'All' | 'Podcasts' | 'Articles' | 'Newsletters' | 'Recipes' | 'Fitness' | 'Meditation' });
   };
 
   const handleSortByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
