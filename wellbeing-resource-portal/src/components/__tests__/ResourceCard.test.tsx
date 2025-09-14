@@ -23,6 +23,9 @@ describe('ResourceCard', () => {
     expect(screen.getByText('Mindful Moments')).toBeInTheDocument();
     expect(screen.getByText('Podcasts')).toBeInTheDocument();
     expect(screen.getByText(/25\s*m/)).toBeInTheDocument();
+    expect(screen.getByText('wellbeing')).toBeInTheDocument();
+    expect(screen.getByText('mindfulness')).toBeInTheDocument();
+    expect(screen.getByText('relaxation')).toBeInTheDocument();
   });
 
   it('should call onClick when card is clicked', () => {
@@ -85,5 +88,37 @@ describe('ResourceCard', () => {
     
     const card = screen.getByRole('button');
     expect(card).toHaveAttribute('tabIndex', '0');
+  });
+
+  it('should display only first 3 tags', () => {
+    const resourceWithManyTags: Resource = {
+      ...mockResource,
+      tags: ["tag1", "tag2", "tag3", "tag4", "tag5"]
+    };
+    
+    const mockOnClick = vi.fn();
+    
+    render(<ResourceCard resource={resourceWithManyTags} onClick={mockOnClick} />);
+    
+    expect(screen.getByText('tag1')).toBeInTheDocument();
+    expect(screen.getByText('tag2')).toBeInTheDocument();
+    expect(screen.getByText('tag3')).toBeInTheDocument();
+    expect(screen.getByText('+2')).toBeInTheDocument(); // Shows count of remaining tags
+    expect(screen.queryByText('tag4')).not.toBeInTheDocument();
+    expect(screen.queryByText('tag5')).not.toBeInTheDocument();
+  });
+
+  it('should not display tags section when no tags are provided', () => {
+    const resourceWithoutTags: Resource = {
+      ...mockResource,
+      tags: []
+    };
+    
+    const mockOnClick = vi.fn();
+    
+    render(<ResourceCard resource={resourceWithoutTags} onClick={mockOnClick} />);
+    
+    expect(screen.getByText('Mindful Moments')).toBeInTheDocument();
+    expect(screen.queryByText('wellbeing')).not.toBeInTheDocument();
   });
 });

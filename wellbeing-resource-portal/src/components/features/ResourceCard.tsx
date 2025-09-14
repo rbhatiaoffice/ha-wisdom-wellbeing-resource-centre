@@ -44,9 +44,28 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onClick })
       
       {/* Content */}
       <div className="p-5">
-        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+        <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2">
           {resource.title}
         </h3>
+        
+        {/* Tags */}
+        {resource.tags && resource.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {resource.tags.slice(0, 3).map((tag, index) => (
+              <span
+                key={index}
+                className="inline-flex items-center rounded-full font-medium bg-primary-100 text-primary-800 px-2 py-1 text-xs"
+              >
+                {tag}
+              </span>
+            ))}
+            {resource.tags.length > 3 && (
+              <span className="inline-flex items-center rounded-full font-medium bg-gray-100 text-gray-600 px-2 py-1 text-xs">
+                +{resource.tags.length - 3}
+              </span>
+            )}
+          </div>
+        )}
       </div>
     </Card>
   );

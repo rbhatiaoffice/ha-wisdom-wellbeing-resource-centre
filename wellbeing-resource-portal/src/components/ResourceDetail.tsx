@@ -111,7 +111,7 @@ export const ResourceDetail: React.FC = () => {
                     key={index}
                     className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium"
                   >
-                    {tag}
+                    {tag }
                   </span>
                 ))}
               </div>
