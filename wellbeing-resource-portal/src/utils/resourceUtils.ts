@@ -1,4 +1,4 @@
-import { Resource, ResourceCategory, ResourceFilters, ResourceGroup } from '../types/resource';
+import type { Resource, ResourceCategory, ResourceFilters, ResourceGroup } from '../types/resource';
 
 export const filterResources = (resources: Resource[], filters: ResourceFilters): Resource[] => {
   let filtered = [...resources];
