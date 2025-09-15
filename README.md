@@ -34,8 +34,8 @@ Visit `http://localhost:5173`
 - Real API integration (currently mock data)
 - User authentication
 - Favorites/bookmarks
-- Content recommendations
+
 
 ## Tech Stack
 
-React 19 + TypeScript + Tailwind CSS + Vite + Vitest
+React 19 + TypeScript + Tailwind CSS
